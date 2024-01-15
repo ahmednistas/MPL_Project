@@ -1,0 +1,30 @@
+<form method="get" action="{% url 'all_tasks' %}">
+    <input type="text" name="search" value="{{ search_query }}" placeholder="Search tasks">
+    <button type="submit">Search</button>
+</form>
+
+{% if user_tasks %}
+    <ul>
+        <h2>search</h2>
+        {% for task in user_tasks %}
+            <li>
+              {% if 'checked' in task.Status %}
+              <input type="checkbox" checked="checked"> done
+              {% else %}
+              <input type="checkbox"> done
+              {% endif %}
+              <label>{{ task.TName }}</label>
+              <br>
+              <label>Due Date: {{ task.DueDate|date:"F j, Y" }}</label>
+              <label>Repeat: {{ task.Repeat }}</label>
+              {% if 'High' in task.Priority %}
+                <input type="checkbox" checked="checked"> High Priority
+              {% else %}
+                <input type="checkbox"> High Priority
+              {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No tasks found.</p>
+{% endif %}
